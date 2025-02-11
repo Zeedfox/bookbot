@@ -1,13 +1,14 @@
-#mi_edad = 29
-#mi_nombre = "Antonio"
-#print(f"hello {mi_nombre}!!! now you have {mi_edad} years old")
-##Print de arriba solo test..
+#Global Variables
+file_path = "books/frankenstein.txt"
+
 def main():
-    file_path = "books/frankenstein.txt"
     book_text = read_file(file_path)
     #print(book_text) #Ejercicio inicial lectura y print consola
     #print(count_words(book_text))#Ejercicio devolver conteo palabras
-    print(count_char(book_text))
+    #print(count_char(book_text)) #Ejercicio conteno individual por caracters
+    #char_report(count_char(book_text)) #Ejercicio de Lista de Diccionarios
+    print_report(char_report(count_char(book_text)),count_words(book_text))
+
 
 def read_file(url):
     with open(url) as f: #With es la mejor practica para cerrar conexiones o archivos
@@ -35,4 +36,28 @@ def count_char(text):
     #for done
     return dict_char
 
+def sort_on(dict): #Aun no se para que sirve, supongo para una llave "key"
+    return dict["num"]
+
+def char_report(dict_of_char):
+    list_of_dict = []
+    for char in dict_of_char:
+        if char.isalpha():#Verificando si pertenece al alfabeto
+            list_of_dict.append({"char":char, "num":dict_of_char[char]}) #creando lista de diccionarios
+    #ordenando los items de la lista en orden descendente.
+    list_of_dict.sort(reverse=True, key=sort_on)
+    #print(list_of_dict)
+    return list_of_dict
+
+def print_report(list_dict, words):
+    print(f"---- Begin report of {file_path} ----")
+    print(f"{words} words found in the document\n")
+    for x in list_dict:
+        print(f"The '{x["char"]}' character was found {x["num"]} times")
+    print("\n--- End report ---")
+    #
+
+
+
+#Excecuting the main function..
 main()
